@@ -1,0 +1,111 @@
+import pandas as pd
+import numpy as np
+
+(1) select
+# 是要两个中括号
+-- Format:
+df[['<column A>','<column B>]]
+
+(2) where
+# 用.loc, df['<column name>'] == 'xxx' 返回true or false. By default, DataFrame.reset_index(drop=False, inplace=False)
+# drop=True => after resetting the index, drop the old index otherwise you'll have two index columns
+# filter by multiple conditions: df.loc[() & ()], df.loc[() | ()]
+-- Format:
+df.loc[df['<column name>'] == 'xxx'].reset_index(drop=True)
+df.loc[(pd.to_datetime(df_join['datetime_x']) - pd.to_datetime(df_join['datetime_y'])).dt.total_seconds() == 1].reset_index(drop=True)
+df.loc[(df['pageId']=='jobs') & (df['pageId']=='home')]
+df.loc[(df['pageId']=='jobs') | (df['pageId']=='home')]
+df.loc[(df['pageId']=='jobs') & (df['memberId']!=300)]
+
+(3) join
+# left_on & right_on can only place one column name instead of multiple columns name
+# how => ('inner', 'left', 'right', 'outer', 'cross')
+-- Format:
+df1.merge(df2, how = 'inner', left_on = '<column name in df1>', right_on = '<column name in df2>', suffixes = ['_ms', '_gg'])
+
+(4) row_number() over (partition by <> order by <>)
+# sort_values(), groupby, cumcount()
+# when rank method = 'first', it's equivalent to mysql row_number()
+-- Format:
+df.sort_values(['<column name, such as datetime or numbers>'], ascending = True).groupby('<column name>').cumcount() + 1
+employee['rk'] = employee.groupby('dept_id')['salary'].rank(method='first', ascending = True)
+
+(5) rank & dense_rank
+# rank
+-- Format:
+employee['salary_rank'] = employee.salary.rank(method = 'min', ascending = True)
+# dense_rank
+-- Format:
+employee['salary_rank'] = employee.salary.rank(method = 'dense', ascending = True)
+# rank() or dense_rank over (partition by ...)
+--Format:
+employee['rk'] = employee.groupby('dept_id')['salary'].rank(method='min', ascending = True)
+employee['rk'] = employee.groupby('dept_id')['salary'].rank(method='dense', ascending = True)
+
+(6) group by & aggregate
+# Group by and count
+-- Format:
+df.groupby(['groupby column'])['<aggregate column>'].count().to_frame('<aggregate column name>').reset_index(drop=True)
+df.groupby('<groupby column>').agg({'<aggregate column>':'count'}).rename({'<aggregate column>':'<new column name>'}, axis= 1).reset_index()
+
+# Group by and count distinct
+-- Format:
+df.groupby('<groupby column>').agg({'id': pd.Series.nunique}).rename({'<aggregate column>':'<new column name>'}, axis= 1).reset_index(drop=True)
+
+# Group by and sum & avg
+-- Format:
+df.groupby('dept_id').agg({'salary': 'sum'}).reset_index(drop=True)
+df.groupby('dept_id').agg({'salary': np.mean}).reset_index(drop=True)
+
+# Group by with multiple aggregations
+-- Format:
+df.groupby('<groupby column>').agg({'<aggregate column1>': 'sum', '<aggregate column2>': pd.Series.nunique}).reset_index(drop=True)
+
+# Group by with min, max aggregation & rename
+-- Format:
+job_post_df = job_post.groupby('member_id').agg(first_posting_date = ('job_posting_date', 'min'),
+                                                last_posting_date = ('job_posting_date', 'max')).reset_index()
+
+(7) order by
+# 升序和降序排列
+-- Format:
+df.sort_values('<column name, such as numbers, dates>', ascending = True)
+df.sort_values('<column name, such as numbers, dates>', ascending = False)
+
+(8) distinct
+# Drop duplicate rows
+-- Format:
+df.drop_duplicates()
+
+(9) rename column name
+# 字典形式重命名。好处是只针对想要修改的column执行重命名操作, inplace=True 直接修改当前的df的名字
+-- Format:
+df.rename({'<current_column_name>':'<new_column_name>'}, axis = 1, inplace = True)
+# list法重命名,必须把所有的column都写上，不然报错
+-- Format:
+df.columns = ['<new column A>','<new column B>']
+
+(10) union all
+# 前提：保证两个dataframe column name数量和名字都相同，不然会多出来column
+-- Format:
+pd.concat([df1, df2], ignore_index=True)
+
+(11) is not in
+# table A column A1 value not in table B column B1
+-- Format:
+department.loc[~department.id.isin(employee.dept_id)]
+
+(12) 返回一个column里出现最多的值
+#
+-- Format:
+df.<column name>.mode().to_frame('<new column name>')
+
+(13) case when
+df['c'] = np.select(
+[
+    (df['a'].isnull() & (df['b'] == 0))
+],
+[
+    1
+],
+default=0 )
