@@ -20,6 +20,9 @@ class Solution:
         # if the string only have one character like ['a'] then return 'a'
         return first_string
 
+Time: O(S), S is the sum of all characters in all strings.
+Space: O(1)
+
 # bianry search
 '''
 explain:
