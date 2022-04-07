@@ -15,14 +15,19 @@ The right interval for [1,2] is [2,3] since start1 = 2 is the smallest start tha
 class Solution:
     def findRightInterval(self, intervals: List[List[int]]) -> List[int]:
         def insertIndex(start_time, target):
-            lo, hi = 0, len(start_time)
-            while lo < hi:
+            lo, hi = 0, len(start_time) - 1
+            while lo + 1 < hi:
                 mid = (lo + hi)//2
                 if start_time[mid] < target:
-                    lo  = mid + 1
+                    lo = mid
                 else:
                     hi = mid
-            return lo
+            if target <= start_time[lo]:
+                return lo
+            elif target <= start_time[hi]:
+                return hi
+            else:
+                return len(start_time)
 
         sorted_by_start = []
         ans = [-1] * len(intervals)
