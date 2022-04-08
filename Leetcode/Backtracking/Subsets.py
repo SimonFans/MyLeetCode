@@ -34,9 +34,7 @@ class Solution:
             for i in range(first, n):
                 curr.append(nums[i])
                 backtrack(i+1, curr)
-                print(curr)
                 curr.pop()
-                print(curr)
 
         ans = []
         n = len(nums)

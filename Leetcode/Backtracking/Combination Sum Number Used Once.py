@@ -20,7 +20,7 @@ class Solution:
 
     # 和上一道题类似。只不过这道题要求candidate中的每个数只能使用一次。也是使用dfs。
     def combinationSum2(self, candidates: 'List[int]', target: 'int') -> 'List[List[int]]':
-        def helper(nums, start, path, ans, remain):
+        def helper(start, path, remain):
             if remain == 0:
                 ans.append(path)
                 return
@@ -33,10 +33,10 @@ class Solution:
                 # if current value is greater than the remain value then no need to continue
                 if candidates[i] > remain:
                     break
-                helper(candidates, i + 1, path + [candidates[i]], ans, remain - candidates[i])
+                helper(i + 1, path + [candidates[i]], remain - candidates[i])
 
-        # aviod over counting         
+        # aviod over counting
         candidates.sort()
         ans = []
-        helper(candidates, 0, [], ans, target)
+        helper(0, [], target)
         return ans
