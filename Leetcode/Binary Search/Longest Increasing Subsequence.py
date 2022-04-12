@@ -20,7 +20,7 @@ class Solution:
             # 遍历结果list,找到第一个比当前num大的数，num替换掉第一个大的数
             else:
                 i = 0
-                while num > res[i]:
+                while res[i] < num:
                     i += 1
                 res[i] = num
         return len(res)
