@@ -9,9 +9,6 @@ Output: 1
 
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
-        nums = [10,9,2,5,3,7,101,18]
-        nums = [0,1,0,3,2,3]
-
         res = [nums[0]]
         for num in nums[1:]:
             # Start with the second num, if num > 前一个就放进结果list去
@@ -41,3 +38,19 @@ class Solution:
 
 # Time: O(NLogN)
 # Space: O(N)
+
+# 用此法代替 bisect.bisect_left
+def insertIndex(start_time, target):
+            lo, hi = 0, len(start_time) - 1
+            while lo + 1 < hi:
+                mid = (lo + hi)//2
+                if start_time[mid] < target:
+                    lo = mid
+                else:
+                    hi = mid
+            if start_time and target <= start_time[lo]:
+                return lo
+            elif start_time and target <= start_time[hi]:
+                return hi
+            else:
+                return len(start_time)
