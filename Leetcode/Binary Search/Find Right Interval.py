@@ -22,9 +22,9 @@ class Solution:
                     lo = mid
                 else:
                     hi = mid
-            if target <= start_time[lo]:
+            if start_time and target <= start_time[lo]:
                 return lo
-            elif target <= start_time[hi]:
+            elif start_time and target <= start_time[hi]:
                 return hi
             else:
                 return len(start_time)
