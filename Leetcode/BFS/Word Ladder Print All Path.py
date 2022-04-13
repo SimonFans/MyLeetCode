@@ -17,7 +17,7 @@ class Solution(object):
                         for c in string.ascii_lowercase:
                             neww = w[:i]+c+w[i+1:]
                             if neww in wordList:
-                                newlayer[neww]+=[j+[neww] for j in layer[w]]
+                                newlayer[neww].extend([j+[neww] for j in layer[w]])
             wordList -= set(newlayer.keys())
             layer = newlayer
         return res
