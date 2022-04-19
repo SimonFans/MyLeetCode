@@ -30,3 +30,10 @@ class Solution:
             max_len = max(max_len, right-left +1)
             right += 1
         return max_len
+
+'''
+Time: O(N) in the best case of k distinct characters in the string
+      O(kN) if you have N distinct characters. Each step one uses O(k) time to
+      find a minimum value in the hashmap with k elements
+Space: O(K) additional space only used for a hashmap
+'''
