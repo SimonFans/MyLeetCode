@@ -8,7 +8,7 @@ Return the number of servers that communicate with any other server.
 
 Input: grid = [[1,0],[1,1]]
 Output: 3
-Explanation: All three servers can communicate with at least one other server.
+Explanation: All three servers can communicate with at least one other server..
 '''
 
 class Solution:
