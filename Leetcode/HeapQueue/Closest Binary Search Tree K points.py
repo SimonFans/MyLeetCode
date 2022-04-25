@@ -29,3 +29,6 @@ class Solution:
         helper(root, target)
         print(heap)
         return [val for _, val in heap]
+
+# Time: O(Nlogk) push N elements into the heap of size k
+# space: O(k+H) to keep the heap of k elements and the recursion stack of the tree height
