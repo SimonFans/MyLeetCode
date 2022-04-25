@@ -17,15 +17,15 @@ inorder traversal + heapq
 class Solution:
     def closestKValues(self, root: Optional[TreeNode], target: float, k: int) -> List[int]:
         heap = []
-        ans = []
-        def inOrderTraversal(node, target):
+        def helper(node, target):
             if not node:
                 return
-            inOrderTraversal(node.left, target)
-            heapq.heappush(heap, (abs(node.val-target), node.val))
-            inOrderTraversal(node.right, target)
-        inOrderTraversal(root, target)
-        while k:
-            ans.append(heapq.heappop(heap)[1])
-            k-=1
-        return ans
+            helper(node.left, target)
+            # 保存在heap queue里面的就是答案(distance, node val)
+            heapq.heappush(heap, (-abs(node.val- target), node.val))
+            if len(heap) > k:
+                heapq.heappop(heap)
+            helper(node.right, target)
+        helper(root, target)
+        print(heap)
+        return [val for _, val in heap]
