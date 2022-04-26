@@ -53,3 +53,7 @@ class Solution:
         self.dfs(grid,i,j+1)
         # search left
         self.dfs(grid,i,j-1)
+
+
+Time: O(M*N) where M is the number of rows, and N is the number of columns
+Space: The worst case is O(M*N). Because grid map is filled with lands where DFS goes by M*N steps
