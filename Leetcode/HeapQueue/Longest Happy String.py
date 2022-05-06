@@ -23,25 +23,25 @@ import heapq
 class Solution:
     def longestDiverseString(self, a: int, b: int, c: int) -> str:
         mapping = {'a':a, 'b':b, 'c':c}
-        max_heap = []
+        maxHeap = []
         for char, num in mapping.items():
             if num != 0:
-                heapq.heappush(max_heap, (num*-1, char))
+                heapq.heappush(maxHeap, (num*-1, char))
         char_list = []
-        while max_heap:
-            cnt1, char1 = heapq.heappop(max_heap)
+        while maxHeap:
+            cnt1, char1 = heapq.heappop(maxHeap)
             if len(char_list) >=2 and char_list[-1] == char_list[-2] == char1:
-                if not max_heap:
+                if not maxHeap:
                     return ''.join(char_list)
-                cnt2, char2 = heapq.heappop(max_heap)
+                cnt2, char2 = heapq.heappop(maxHeap)
                 char_list.append(char2)
                 cnt2 += 1
                 if cnt2 != 0:
-                    heapq.heappush(max_heap,(cnt2, char2))
-                heapq.heappush(max_heap, (cnt1,char1))
+                    heapq.heappush(maxHeap,(cnt2, char2))
+                heapq.heappush(maxHeap, (cnt1,char1))
                 continue
             char_list.append(char1)
             cnt1 += 1
             if cnt1 != 0:
-                heapq.heappush(max_heap,(cnt1, char1))
+                heapq.heappush(maxHeap,(cnt1, char1))
         return ''.join(char_list)
