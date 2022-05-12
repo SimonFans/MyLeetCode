@@ -9,6 +9,7 @@ Explanation: There are a total of 4 courses to take. To take course 3 you should
 So one correct course order is [0,1,2,3]. Another correct ordering is [0,2,1,3].
 '''
 
+# topological sorting
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
         ans = []
@@ -31,3 +32,6 @@ class Solution:
                 if inDegree[next_course] == 0:
                     queue.append(next_course)
         return ans if not sum(inDegree) else []
+
+Time: O(V+E)
+Space: O(V+E)
