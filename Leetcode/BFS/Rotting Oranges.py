@@ -33,7 +33,7 @@ class Solution:
                     queue.append((row, col, 0))
         seen = set()
         while queue:
-            x, y, res = queue.popleft()
+            x, y, minutes = queue.popleft()
             dirs = {(x-1,y), (x+1,y), (x, y-1), (x, y+1)}
             for nx, ny in dirs:
                 # Got a fresh orange
@@ -41,8 +41,8 @@ class Solution:
                     seen.add((nx, ny))
                     fresh_count -= 1
                     if fresh_count == 0:
-                        return res + 1
-                    queue.append((nx, ny, res + 1))
+                        return minutes + 1
+                    queue.append((nx, ny, minutes + 1))
         # edge case: [[0,2]], if no fresh orange in the grid, which means there's value 1
         # then return 0 means 0 minutes needed
         return 0 if fresh_count == 0 else -1
