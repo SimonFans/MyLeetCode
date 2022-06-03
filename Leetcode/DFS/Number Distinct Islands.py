@@ -47,16 +47,16 @@ class Solution:
             dfs(row, col-1, 'L')
             # up
             dfs(row-1, col, 'U')
-            # path.append('0')
-            path += '0'
-        
+            # For backtracking because it may get same path value but with different shapes
+            path += 'E'
+
         seen = set()
         unique_islands = set()
         for row in range(len(grid)):
             for col in range(len(grid[0])):
                 # path = []
                 path = ''
-                dfs(row, col, '0')
+                dfs(row, col, 'S')
                 if path:
                     # unique_islands.add(tuple(path))
                     unique_islands.add(path)
