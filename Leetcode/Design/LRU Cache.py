@@ -41,6 +41,8 @@ class LRUCache:
         # new key:value or update existing key with new value
         self.hashMap[key] = value
         if len(self.hashMap) > self.capacity:
+            # Remove the first item
+            # By default, LIFO h.popitem(last=True), you can change: FIFO h.popitem(last=False)
             self.hashMap.popitem(last=False)
 
 # Your LRUCache object will be instantiated and called as such:

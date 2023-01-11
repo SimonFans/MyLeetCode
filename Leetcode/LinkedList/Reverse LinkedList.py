@@ -23,21 +23,22 @@ none <- 1     2 --->
 # Time: O(n) n: list's length. Space: O(1)
 class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
-        prev = None
-        curr = head
+        prev, curr, nxt = None, head, head
         while curr:
             # 保留当前node下一个位置的地址
-            next_temp = curr.next
+            nxt = curr.next
             # 当前位置指向前一个node prev
             curr.next = prev
             # 当前位置成为新的prev
             prev = curr
             # 当前位置移到下一个位置
-            curr = next_temp
+            curr = nxt
         return prev
 
-'''
-Recursion:
+
+
+
+''' (2) This is the second way to do this problem using recursion
 1 -> 2 -> 3 -> N
 1 -> 2 <- 3
      h    p

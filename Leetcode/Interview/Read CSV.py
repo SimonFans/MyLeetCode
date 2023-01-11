@@ -17,7 +17,7 @@ output1 = pd.merge(data1, data2,
                    on='ID',
                    how='inner')
 output2 = pd.merge(data1, data2,
-                   on='ID', 
+                   on='ID',
                    how='inner')
 df = pd.concat([output1, output2], ignore_index=True)
 output_path = './Documents/test/out.csv'
